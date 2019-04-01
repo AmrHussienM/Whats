@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "199436434005",
+    "firebase_url": "https://whats-cfcae.firebaseio.com",
+    "project_id": "whats-cfcae",
+    "storage_bucket": "whats-cfcae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199436434005:android:f553c25be3d21395",
+        "android_client_info": {
+          "package_name": "com.example.whats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199436434005-so11j9q75ev3f84cv2ni412m5lukp0gh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.whats",
+            "certificate_hash": "15df5f89660a9c183bbc44c53e1bcdcfc9cf0d70"
+          }
+        },
+        {
+          "client_id": "199436434005-q1ejkeibevr2qmlkil5l5qln97hcdqia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUGyjX2-qmT4ChRby8V7aWcq3KePoYnjI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199436434005-q1ejkeibevr2qmlkil5l5qln97hcdqia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
