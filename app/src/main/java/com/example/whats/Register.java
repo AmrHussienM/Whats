@@ -74,7 +74,7 @@ public class Register extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if (task.isSuccessful()){
-                                sendUserToLoginActivity();
+                                sendUserToMainActivity();
                                 Toast.makeText(Register.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                             }
@@ -91,6 +91,12 @@ public class Register extends AppCompatActivity {
     private void sendUserToLoginActivity() {
         Intent loginIntent=new Intent(Register.this,Login.class);
         startActivity(loginIntent);
+    }
+    private void sendUserToMainActivity() {
+        Intent mainIntent=new Intent(Register.this,MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+        finish();
     }
 
     private void initialization() {
