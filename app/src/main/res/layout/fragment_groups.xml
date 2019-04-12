@@ -5,10 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GroupsFragment">
+<!--
+<RecyclerView
 
+    ></RecyclerView>-->
 
-    <ListView
-        android:id="@+id/listview"
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/group_chat_fragment_rec"
+        ></android.support.v7.widget.RecyclerView>
 </RelativeLayout>

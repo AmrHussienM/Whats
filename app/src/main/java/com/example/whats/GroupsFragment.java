@@ -1,15 +1,19 @@
 package com.example.whats;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,12 +31,13 @@ import java.util.Set;
  */
 public class GroupsFragment extends Fragment {
     private View groupFragmentView;
-    private ListView list_View;
-    private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<String> list_of_groups=new ArrayList<>();
-    private DatabaseReference groupRef;
 
-
+    private RecyclerView recyclerView;
+    private FirebaseDatabase firebaseDatabase;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference gChatRef;
+    private ArrayList<String> strings;
+    private GroupChatAdapter adapter;
     public GroupsFragment() {
         // Required empty public constructor
     }
@@ -43,49 +48,52 @@ public class GroupsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         groupFragmentView= inflater.inflate(R.layout.fragment_groups, container, false);
-
-        groupRef= FirebaseDatabase.getInstance().getReference().child("Groups");
-
         initialization();
+        fillArrayListWithGroupNames();
+         adapter=new GroupChatAdapter(strings,getActivity());
 
-        retriveAndDisplayGroups();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         return groupFragmentView;
     }
 
+    private void fillArrayListWithGroupNames() {
+
+    gChatRef.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            for (DataSnapshot d:dataSnapshot.getChildren()) {
+                strings.add(d.getKey().toString());
+                adapter.notifyDataSetChanged();
+
+            }
+
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    });
+
+
+    }
 
 
     private void initialization()
     {
-        list_View=groupFragmentView.findViewById(R.id.listview);
-        arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,list_of_groups);
-        list_View.setAdapter(arrayAdapter);
+      recyclerView= groupFragmentView.findViewById(R.id.group_chat_fragment_rec);
+        firebaseAuth=FirebaseAuth.getInstance();
+        firebaseDatabase=FirebaseDatabase.getInstance();
+        gChatRef=firebaseDatabase.getReference().child("Groups");
+        strings=new ArrayList<>();
+
     }
 
-    private void retriveAndDisplayGroups()
-    {
-        groupRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Set<String> set=new HashSet<>();
-                Iterator iterator=dataSnapshot.getChildren().iterator();
-                while (iterator.hasNext())
-                {
-                    set.add(((DataSnapshot)iterator.next()).getKey());
-
-                }
-                list_of_groups.clear();
-                list_of_groups.addAll(set);
-                arrayAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
 }
